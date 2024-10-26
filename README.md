@@ -120,6 +120,12 @@ To get started with the project, clone the repository and install the required d
 3. Navigate through the transaction list using the "Next" and "Previous" buttons.
 4. View statistics, bar charts, and pie charts based on the selected month.
 
+## Video Showcase
+
+https://github.com/user-attachments/assets/70f0f753-49a7-4344-bf03-686f57f83521
+
+
+
 ## Technologies Used
 
 - **Backend**: Node.js, Express, MongoDB
