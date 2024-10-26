@@ -1,4 +1,4 @@
-```markdown
+
 # MERN Stack Coding Challenge
 
 ## Project Overview
