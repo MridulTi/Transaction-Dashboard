@@ -1,87 +1,127 @@
-Here's a `README.md` template that you can use for your project. This template covers all the guidelines provided for Task 3: Design a Weather Forecast Dashboard.
+```markdown
+# MERN Stack Coding Challenge
 
-# Task 3: Weather Forecast Dashboard
+## Project Overview
 
-## Overview
+This project is a MERN stack application designed to manage and visualize product transactions using data fetched from a third-party API. It consists of a backend service that interacts with a MongoDB database and a frontend application built with React that displays transaction data in a user-friendly interface, including tables and charts.
 
-This project is a weather forecast dashboard designed to provide users with real-time weather information. The dashboard features daily weather forecasts and other relevant meteorological data.
+## Table of Contents
 
-## Repository Information
+- [Installation](#installation)
+- [Backend API](#backend-api)
+  - [Data Source](#data-source)
+  - [API Endpoints](#api-endpoints)
+- [Frontend Features](#frontend-features)
+- [Usage](#usage)
+- [Technologies Used](#technologies-used)
 
-- **Repository Name**: `wasserstoff-FullstackInternTask`
-- **Public URL**: [GitHub Repository](https://github.com/MridulTi/wasserstoff-FullstackInternTask)
+## Installation
 
-## Project Setup
+To get started with the project, clone the repository and install the required dependencies for both the backend and frontend.
 
-### Prerequisites
-- [Node.js](https://nodejs.org/)
-- [Git](https://git-scm.com/)
+### Backend Setup
 
-### Steps to Run the Project
-
-1. **Clone the Repository**
+1. Navigate to the backend directory:
    ```bash
-   git clone https://github.com/MridulTi/wasserstoff-FullstackInternTask.git .
+   cd backend
    ```
 
-2. **Install Dependencies**
+2. Install the necessary packages:
+   ```bash
+   npm install
+   ```
+
+3. Start the backend server:
+   ```bash
+   npm start
+   ```
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
    ```bash
    cd frontend
-   npm install
-   cd..
-   cd backend
-   npm install
    ```
 
-3. **Run the Development Server**
+2. Install the necessary packages:
    ```bash
-   1. cd frontend
-     npm run dev
-   2. cd backend
-     npm run dev
+   npm install
    ```
 
-4. **Open in Browser**
-   Open your browser and navigate to `http://localhost:3000`.
+3. Start the frontend application:
+   ```bash
+   npm start
+   ```
 
-## API Endpoints
+## Backend API
 
-Here are the key API endpoints utilized in the project:
+### Data Source
 
-- `/api/v1/weather/current-weather`: Fetches current weather data for a specified location.
-- `/api/v1/weather/weekly-forecast`: Fetches the 7-day weather forecast for a specified location.
-- `/api/v1/weather/daily-forecast`: Fetches the today's weather forecast for a specified location.
-- `/api/v1/weather/hourly-forecast`: Fetches the horly weather forecast for a specified location.
+- **Third Party API URL**: [Product Transaction JSON](https://s3.amazonaws.com/roxiler.com/product_transaction.json)
+- **Request Method**: GET
+- **Response Format**: JSON
 
-For detailed API documentation, refer to the [Postman Collection](https://www.postman.com/aviation-operator-36353482/workspace/public/collection/20548580-2dcce9fd-e8b3-4210-8345-6919564b25ff?action=share&creator=37397559).
+### API Endpoints
 
-## Frontend
+1. **Initialize Database**
+   - **Method**: `GET`
+   - **Endpoint**: `/api/v1/product/seed_data/`
+   - **Description**: Fetches data from the third-party API and initializes the database with seed data.
 
-The frontend of this project is built using React. The dashboard features a user-friendly interface, providing weather information, including temperature, humidity, wind speed, and other relevant data.
+2. **List Transactions**
+   - **Method**: `GET`
+   - **Endpoint**: `/api/v1/product/all_transactions/:month?q=`
+   - **Query Parameters**: 
+     - `month`: Expected values are any month between January to December.
+     -  `q`: (optional) for filtering transactions by product name.
+     - `page`: (optional) The page number for pagination (default: 1).
+     - `limit`: (optional) Number of items per page (default: 10).
+   - **Description**: Returns a list of transactions filtered by the selected month, with support for search and pagination.
 
-## Postman Collection
+3. **Statistics**
+   - **Method**: `GET`
+   - **Endpoint**: `/api/v1/product/statistics/:month`
+   - **Query Parameters**: 
+     - `month`: Expected values are any month between January to December.
+   - **Description**: Returns total sales amount, total sold items, and total not sold items for the selected month.
 
-If you are not building the frontend, you can test the API endpoints using the Postman collection. 
+4. **Bar Chart Data**
+   - **Method**: `GET`
+   - **Endpoint**: `/api/v1/product/priceRange/:month`
+   - **Query Parameters**: 
+     - `month`: Expected values are any month between January to December.
+   - **Description**: Returns data for a bar chart showing price ranges and the number of items sold in each range for the selected month.
 
-- **Collection URL**: [Weather Forecast API Collection](https://www.postman.com/aviation-operator-36353482/workspace/public/collection/20548580-2dcce9fd-e8b3-4210-8345-6919564b25ff?action=share&creator=37397559)
+5. **Pie Chart Data**
+   - **Method**: `GET`
+   - **Endpoint**: `/api/v1/product/uniqueCategories/:month`
+   - **Query Parameters**: 
+     - `month`: Expected values are any month between January to December.
+   - **Description**: Returns unique categories and the number of items sold from each category for the selected month.
 
-## Video Explanation
+6. **Combined Data**
+   - **Method**: `GET`
+   - **Endpoint**: `/api/v1/product/combinedResponse/:month`
+   - **Query Parameters**: 
+     - `month`: Expected values are any month between January to December.
+   - **Description**: Combines responses from the statistics, priceRange, and uniqueCategores APIs.
 
-A short video explaining the approach taken to solve the problem has been recorded. It covers the thought process, design decisions, and implementation details.
+## Frontend Features
 
-- **Video URL**: [Approach and Solution](https://youtu.be/NCYYKM0XSSA)
+- **Transactions Table**: Displays a list of transactions for a selected month, with search and pagination functionalities.
+- **Transactions Statistics**: Shows total sales amount, total sold items, and total not sold items for the selected month.
+- **Transactions Bar Chart**: Visualizes the price range and the number of items in that range for the selected month.
+- **Transactions Pie Chart**: Displays unique categories and the number of items sold in each category for the selected month.
 
-## Comments and Documentation
+## Usage
 
-The code is well-commented to provide clarity on various functions and logic throughout the project. Please refer to the comments in the codebase for in-depth explanations.
+1. Select a month from the dropdown menu to view transactions for that month.
+2. Use the search box to filter transactions by title, description, or price.
+3. Navigate through the transaction list using the "Next" and "Previous" buttons.
+4. View statistics, bar charts, and pie charts based on the selected month.
 
-## Contact Information
+## Technologies Used
 
-If you have any questions or need further assistance, feel free to reach out:
-
-- **Name**: Mridul Tiwari
-- **Email**: mridultiwari2002@gamil.com
-
----
-
-Thank you for reviewing this project. Feedback is always appreciated.
+- **Backend**: Node.js, Express, MongoDB
+- **Frontend**: React, Axios, Chart.js (or any charting library)
+- **Other**: Mongoose, dotenv

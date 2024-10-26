@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import DefaultPagination from '../Components/Pagination';
-import { BarChart } from '../Components/Charts';
+import { BarChart, PieChart } from '../Components/Charts';
 
 function Home() {
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -13,6 +13,7 @@ function Home() {
   const [allResult, setAllResult] = useState({});
   const [chartData, setChartData] = useState({
     Bar: { labels: [], datasets: [] },
+    Pie: { labels: [], datasets: [] }
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +62,7 @@ function Home() {
     axios.get(`/api/v1/product/combinedResponse/${month+1}`)
       .then(res => {
         setAllResult(res.data.data);
+        console.log(res.data.data)
         setChartData({
           Bar: {
             labels: res.data.data?.priceRange.map(data => data.range),
@@ -69,7 +71,14 @@ function Home() {
               backgroundColor: "cyan",
               data: res.data.data?.priceRange.map(data => data.count)
             }]
-          }
+          },
+          Pie: {
+            labels: res?.data?.data?.uniqueCategories.map(data => data.category),
+            datasets: [{
+              label: "Unique Categories Count",
+              data: res.data.data?.uniqueCategories.map(data => data.count)
+            }]
+          },
         });
       })
       .catch(err => console.log(err));
@@ -181,6 +190,15 @@ function Home() {
         <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Bar Chart Stats - {months[month]}</h1>
         {chartData.Bar.datasets.length !== 0 ? (
           <BarChart chartData={chartData.Bar} />
+        ) : (
+          <p className='text-gray-400 text-center'>Loading...</p>
+        )}
+      </Card>
+
+      <Card className="w-full max-w-5xl p-5">
+        <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Bar Chart Stats - {months[month]}</h1>
+        {chartData.Bar.datasets.length !== 0 ? (
+          <PieChart chartData={chartData.Pie} />
         ) : (
           <p className='text-gray-400 text-center'>Loading...</p>
         )}
